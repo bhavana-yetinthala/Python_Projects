@@ -1,0 +1,303 @@
+Problem Statement:
+
+As a devops engineer, this is the problem statement that is given by the development team. 
+
+There are a lot of QE engineers; it can be anyone in the organization; it can be QE or development.
+So, when they notice a bug in the application while testing the application or come across a bug in the application, Then they will create an issue in the GitHub repository.
+That is, developers or QE people have created issues on the github repository. Whoever creates an issue should not be considered an issue because they might have some configuration. 
+mistakes, or they did not understand the application workflow properly.
+There will be a development team in your organization, so one of the developers will work once a week or once every two days. What does he (the developer) dohe (the developer) do is?
+The developer goes to the github repository and tries to check whether there are genuine issues or not. In the organization, there will be many issues, and developers can have multiple microservices or multiple repositories.
+And every time an issue is created and it is not valid, they can simply close the issue that is there.
+If the issue is valid, they have to work on the particular issue. So, to work on the particular issue, they have to track the amount of work that is required. They have to show the organization that these are the issues that we are working on.
+
+So, what do they need to do?
+
+They need to go to the Jira dashboard, and they need to create a ticket on the Jira dashboard.
+Now, this is so much work for the development team, which is basically operations work, that is, they have to login to the Jira dashboard and provide all the details.
+
+For eg: 
+Usually on the github repository itself, if you look into this particular repository itself (in issues), he has already provided the information.
+Now the developer has to copy and paste it or manually enter all the details.
+Instead, they will come to the devops team and seek help, where they will ask the devops team, "Hey devops team, can you automate this for me?"
+
+
+Procedure:
+
+The entire process will be automated, and there will be two parties. One is GitHub, and the second is Jira.
+These are the two parties, and automation is what it needs to do: whenever someone comments on the github, a ticket has to be automatically created.
+So, there needs to be a bridge between both of these things.
+Using this bridge, when someone comments on the issue, they say that a Jira ticket is needed. Only then, Jira has to be created.
+To write that logic, the Python programming language can be chosen. I cannot choose shell scripting here, as APIs are involved and very dynamic in nature. The server where you want to write,
+This can be a Windows or Linux machine.
+There are very good modules that are available in Python to perform. So, Python is the better option.
+Here, everybody needs to ask github that "whenever someone writes the comment /jira, "Hey github, I have created a Python application and I have hosted it on an EC2 instance, why don't you send me a webhook?"
+
+** Here, a webhook will be configured in the github, where everyone tells github through the webhook that "If someone comments or jira on this particular repository, Using this webhook, send me all the information about that particular issue. Send me the description of the issue, who has created the issue, when did they create it, what did they create... ", each and everything that is seen on UI, every minute detail (entire UI thing) is converted into a JSON format. 
+** You don't have to do anything here; github automatically does this for you. All you need to do is go to the repository, and you have to just provide Github with the URL where it has to send the JSON information. So, it will send the JSON information for the Python application that we have.
+
+Now, JSON information will be taken, whatever fields (required fields)  are necessary will be taken, and an API call will be made to Jira. 
+
+
+IMP Notes:
+
+Basically, there are two parts. One is GitHub, and the second is Jira.
+
+Part1:
+
+- The automation that is required is that you will create an EC2 instance and your Python application.
+As a devops engineer, you will configure Github by saying, "Send me this particular information.". 
+Basically, you will configure a webhook. This webhook tells github that "Just keep watching for this particular comment called "/jira" whenever you find that comment."  In the webhook configuration, the devops engineer has provided you with a "url" for the Python application.
+What you need to do is just provide a JSON file for the Python application.
+So, in Part 1, you are receiving JSON.
+
+Part2:
+
+In Part 2, what you will be doing is sending JSON, or where an API call is made with Jira, and creating a Jira ticket.
+
+
+Tasks for Part 1:
+
+How do I setup Jira?
+How do I understand the API documentation for Jira? How do I make API calls with Jira?
+How to write a Python script?
+Request modules will be used, and using the request module, how will you make an API call?
+How do I choose fields for the Jira dashboard?
+
+
+Tasks for Part 2:
+
+How do I convert a Python script into a Flask application?
+How to host an application on EC2?
+How do I set up the GitHub webhook?
+
+Algorithm for Part 1:
+
+Step 1: Jira Setup
+Step 2: Understand Jira API calls. How do I make API calls with Jira?
+Step 3: Write the Python script.
+Step 4: Execution of the script
+
+Basically, a person needs to understand what types of projects are present in Jira, try to list the issues, and try to understand how to create or issue a ticket in Jira.
+
+Note: Refer to the video on how to set up and install Jira on a laptop.
+
+How do I automate the Jira dashboard? , Let's see how to do this. Let's play and explore this:
+
+Whenever you want to talk to an application (Jira or SAAS Solution), there will be two ways to interact with it. One is through the API, or the other  is through CLI.
+If you need to programmatically talk to the applications, then an API is the solution.
+So, to learn how to make API calls with Jira, the first thing you need is an API token.
+
+How do I create an API token and what is an API token?
+
+It's basically like authentication and authorization, for example: for the user interface, you will provide a username and password when you are logging in; in the same way, for APIs, you will go with API tokens for security purposes.
+It's just like a password, but you can create, delete, and have multiple tokens for one account; that is, you can play with it.
+For creating API tokens, go to profile > Manage Account > Click on the security button > API tokens > Create and manage API tokens. You can then create, delete, or do whatever you want.
+After creating an API token, now you need to understand how to talk to Jira API's, that is, which modules in Python you need to use, on which URL you should access this Jira, what is the context, etc.
+Because in Jira, you will have a lot of things; you can create issues, add bugs, add comments, and programmatically, you can do all of these things.
+
+
+Note: Just go to Jira documentation, search for Jira API documentation, and you will have a cloud API. In this way, you will get everything.
+
+
+Part-1, Tasks:
+
+How do I list the projects using Jira?
+
+I will see how to list the projects without going to the Jira dashboard and trying to understand what projects are available.
+Basically, we need to understand how many are there without using the UI. 
+
+Process:
+
+1) In documentation, search for projects, expand it, get all projects, and list the projects.
+2) In that, go to "get projects" and copy the code for "GET/rest/api/3/project" in Python.
+3) Use the API token that you have generated and try to make the API call with the sample code snippet that is provided; copy the API token from the Jira account and paste it in a place where it will be safe and can be remembered.
+4) Replace the default "url = "https://your-domain.atlassian.net/rest/api/3/project"" with your url. Our url is: "https://team-iuaf8t7ajvj4.atlassian.net/rest/api/3/project.", There need to be only single slashes except after https.
+5) In basic http authentication, you need to provide your email address (which you used while creating a Jira account) and an API token from your Jira account.
+
+** Better practice is to read the API token as an environment variable.
+
+Outputs:
+
+1) If you execute the default file above, you will get a lengthy output including all the variables and values. It gives all the details of the project.
+2) Here, JSON handling comes into play:
+
+What can you do here?
+
+Copy the entire code and paste it in a JSON format. You can beautify the code with the options provided in the online tool.
+It gives the output in list format, where you can clearly understand how many projects are present, elements included in it,...
+If you want to print only particular values from the entire list, give them as below:
+
+output = json.loads(response.text)
+
+name = output[0]["name"]
+
+print(name)
+
+
+** In Python, when we try to pass the json information, we need to convert the json to a dictionary, and then we can try to execute operations on the dictionaries. For that, we will use json. loads() 
+
+Below is the entire code for listing the projects:
+
+# This code sample uses the 'requests' library:
+# http://docs.python-requests.org
+import requests
+from requests.auth import HTTPBasicAuth
+import json
+
+url = "https://team-iuaf8t7ajvj4.atlassian.net/rest/api/3/project"
+
+auth = HTTPBasicAuth("x","x")
+
+headers = {
+  "Accept": "application/json"
+}
+
+response = requests.request(
+   "GET",
+   url,
+   headers=headers,
+   auth=auth
+)
+
+output = json.loads(response.text)
+
+name = output[0]["name"]
+
+print(name)
+
+Note: You can use for loops to traverse through the list and get whatever values you need, and so on. Explore all the doable tasks.
+
+
+Explanation of code:
+
+Basically, we are trying to use the requests module (used to make API calls); when we try to do automation with other applications, we might not use the requests module, which depends on the application.
+The next import is used to fetch a particular module from a package, and a json module is imported as json is being used.
+The next request is performed as shown in the documentation by using a URL, an API token, and Gmail.
+
+Task2:
+
+To create a Jira ticket or an issue, Jira tickets are basically called issues.
+
+1) Go to the documentation and search for the issue.
+2) Go to issues and expand the issues, then go to create issues.
+3) Copy the code and paste it in the code editor, which ever you are using can be github codespaces, vs. code.
+4) The only change that you observe is that when you create a Jira ticket manually through the UI, that is, go to your Jira dashboard and click on Create ticket. You can observe that there will be a bunch of fields, some of which are mandatory and some are not.
+5) Keep only the required fields while coding, but by default, the Jira documentation gives you all available fields.
+6) Project name, issue type, summary, and reporter are mandatory in creating an issue. Here, Jira automatically knows who the reporter is.. That is, remove everything from the code in order to make the code easier and keep only the necessary fields.
+7) In the description  text field, give a description, for example, "My second Jira ticket."
+
+How to find Id field in issuetype ?
+
+- Go to the Jira dashboard. While creating a story, you will get a story in the issuetype options, but in the API call, it will ask for an ID.
+You need an ID, not the name.
+- Click on the... icon on the right side of the projects tab ("Board" will be highlighted), go to configure board, there will be a section called "issuetypes," click on it, and click on the story. Then, in the URL, you will see the ID.
+"https://team-iuaf8t7ajvj4.atlassian.net/jira/software/projects/SCRUM/settings/issuetypes/10001", id will be 10001.
+In the project field, instead of id, give key; that is the name, which you will have in brackets near the project name.
+
+For example, My Scrum Project (SCRUM), here the key is SCRUM.
+
+For UI purposes, just go to the Jira dashboard, go to projects, click on the project where you want to create a ticket, go to backlog. After executing the code, refresh the page, and you can observe that there will be a new ticket.
+
+Outputs:
+
+After executing the code, you will get the output below:
+
+@bhavana-yetinthala ➜ /workspaces/codespaces-blank $ python project4-part1_create_issue.py
+{
+    "id": "10001",
+    "key": "SCRUM-2",
+    "self": "https://team-iuaf8t7ajvj4.atlassian.net/rest/api/3/issue/10001"
+}
+
+- Refresh the jira dashboard to see the ticket in backlogs.
+
+Below is the code used:
+
+# This code sample uses the 'requests' library:
+# http://docs.python-requests.org
+import requests
+from requests.auth import HTTPBasicAuth
+import json
+
+url = "https://team-iuaf8t7ajvj4.atlassian.net/rest/api/3/issue"
+
+auth = HTTPBasicAuth("x","x")
+
+headers = {
+  "Accept": "application/json",
+  "Content-Type": "application/json"
+}
+
+payload = json.dumps( {
+  "fields": {
+    
+    "description": {
+      "content": [
+        {
+          "content": [
+            {
+              "text": "My second jira ticket.",
+              "type": "text"
+            }
+          ],
+          "type": "paragraph"
+        }
+      ],
+      "type": "doc",
+      "version": 1
+    },
+    
+    "issuetype": {
+      "id": "10001"
+    },
+    
+    "project": {
+      "key": "SCRUM"
+    },
+    
+    "summary": "My Second Jira Ticket",
+    
+   
+  },
+  "update": {}
+} )
+
+response = requests.request(
+   "POST",
+   url,
+   data=payload,
+   headers=headers,
+   auth=auth
+)
+
+print(json.dumps(json.loads(response.text), sort_keys=True, indent=4, separators=(",", ": ")))
+
+
+Challenges faced:
+
+1) While copying the URL of the Atlassian dashboard.
+2) Got error messages while executing creating ticket code.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,267 @@
+Day-15
+
+how to convert a Python program into an API.
+
+Why should an API be written?
+
+As part 1 of this particular project, there is github, and there is a developer who is writing comments on the github page. Through the webhooks, GitHub is trying to talk to the Python application.
+Github can talk to your Python program that is available on an EC2 instance, on your personal laptop, or anywhere in the world by talking to the API of your Python application.
+Webhooks will be present in the settings of your Github account.
+
+
+The Python application that was written on day 14 will be converted to the Flask framework so that an API is exposed.
+Once the URL is provided in the webhooks section of github, github is going to send the entire JSON payload.
+
+What is a payload??
+
+The payload is nothing but the JSON information, which GitHub is going to return to the Python application.
+From this information, you can take whatever information you require and talk to the Jira APIs.
+
+For example, if you want to understand who has created the particular github issue, then you can search for the user who has created the particular github issue, and you can get the user's ID and whatever you want.
+Everything that you see here through the UI is sent as JSON information to the Python application.
+It depends on us. How much information do we need to post to Jira?
+
+Part-1:
+
+In part 1, you have an entity github and another entity EC2 instance where the Python API is deployed; the next jira will be present.
+
+Problem Statement:
+The problem statement is that if some users comment on the github issue that we have on this particular repository, any issue, immediately github has to send the complete information of that particular issue through a JSON payload to the Python application.
+
+How is a JSON payload sent to a Python application?
+
+Through the configuration of webhooks, which tells GitHub that whenever someone comments or shares information on a particular issue, you need to send this information to EC2.
+
+
+Now, the Python application should make an API call to Jira.
+In this way, a ticket or an issue is created in the jira.
+
+Part-2:
+
+Algorithm:
+
+Understand: What exactly is an API? 
+We need to convert the Python application (Python script) that we have. As github needs to talk to the API because github cannot log into your EC2 instance and execute this program,.
+
+Note: We need to convert this Python script to the API. Why are we converting this Python script to the API? because if it's not an API, GitHub needs a way to log into your EC2 instance and run the program as you are running it. If it is an API, then GitHub can directly invoke it because this Python script will be deployed to a server.
+
+Deploy this Python application on the server.
+How to set up GitHub Webhooks.
+conditional handling, where only if the user comments or jira, a ticket needs to be created. Because there may be many discussions going on, there may be a wait time, so it's better to create a ticket when it's finalized and someone needs to take compulsory action on the issue.
+That is, you need to go through the JSON information that is sent from GitHub to the Python program, and you have to just write an if condition.
+
+Explanation:
+
+What is an API?
+In this task, API calls are made with the Flask framework.
+An API is an application interface; for example, let's take an example of a ticket booking application. There will be a website for this particular application, and this website provides a user interface. We will manually enter all details and post all information to the user interface.
+What this user interface will say "I got all the information; let's move to the transactions page," where it prompts for payment and tickets will be booked.
+Above is the user interface, but there is another interface called the application interface.
+
+Application Interface:
+
+When it comes to automation, the user interface is not that friendly (that is, giving all the details and doing automation is not that easy).
+The easy way of doing it is for whoever is writing a particular application to create an API.
+
+Best Example: Github's user interface is generally what we use, and if we type "api.github.com" in Google or any browser, we can see Github's application interface.
+
+The application interface is very friendly in such a way that you can programmatically write a script and talk to the application.
+
+What are the different APIs that we can have?
+
+The entire API's work is on the "HTTP" protocol.
+There are four different types of "HTTP" request types.
+Let's say there is a ticket booking application, and there are different actions that you can perform on this ticket booking website.
+There will be POST, GET, PUT, and DELETE HTTP types.
+The above four actions are common in every application. Let's say you have a database, and this database also has an API. That is, if you want to add some information, you will post the information; if you need some information, you will use the get protocol; if you want to update some information, you will use put; and if you want to delete something, you will use the delete operation.
+APIs are not only for applications; even databases have APIs.
+Converting a Python program to an API with the help of Flask and writing an API with Flask are easy and can be done in a couple of minutes.
+
+
+In this particular task, Github is talking to the Python program, or Python API. Let's say this is hosted on an EC2 instance. Now you need to tell GitHub what kind of information it has to provide.
+
+You will say, "This is my API URL; talk to it," but here should github post, get, put, or delete the information?. Depending on the particular action, you will build your API type.
+In this case, we need GitHub to post the information to us. Because github is sending us all the related information related to the user, github is not taking anything from us, but github is providing us some information. So, the API that we have to write should be of the "POST" type.
+Even in the Jira part, we will post the information. Because Github is posting to us and we are posting to Jira, we are telling Jira to create a ticket by taking all the information.
+If we consider Jira a DB, we are populating a record in the DB.
+
+Console:
+
+How do I write a Flask API?
+
+First, go to the terminal and install flask: "pip install flask.".
+You need to import the flask; the flask is a complete package. There is no need for the entire package; you just need a flask module. It is as follows: from pacakge import module (from flask import FLASK) -> from flask package need to import the Flask module, if we import the entire package, it will take a lot of time to execute the program. 
+
+Task1:
+If someone hits the flask API, they need to see the response as "Hello World!".
+After importing Flask, you need to give the following statement: app = Flask(__name__).
+
+Explanation:
+
+Instantiating an object is basically creating a flask application instance. The particular line "app = Flask(__name__)" is required to create a flask application instance because all the actions will be performed using this flask app instance. This is the framework that is used, and within this framework, the entire thing that we do and how the user talks depends upon the flask instance that we have created.
+
+This line is written on every flask API that we are trying to build.
+
+define a function, it just needs to return "Hello World.".
+Before defining a function, you need to add a decorator for this function. Decorator in Python is something where, before you execute the function, if you are writing @something (decorator should always be started with @), the command is @app.route("/").
+
+Explanation:
+
+Generally, this particular line is called a decorator. In any decorator that you are trying to write, the main purpose of the decorator is "Before executing this particular function, let's say someone invoked this particular function. Before executing this particular function, please try to execute this action. The decorator performs an action before the execution of the function.
+
+So, the decorator performs an action before the execution of the function. Let's say someone is trying to access a particular microservice of Amazon. It can be any microservice. In which cases will you use decorator? "You want to verify if the person who is accessing the Amazon API, the microservice API, is authenticated to the Amazon website or not. In such particular cases, you can use the decorators." The best example of this is when you can verify if someone is trying to talk to an API: is that particular person authenticated or not?.
+
+But why are we writing a decorator? In a flask, if you write this particular decorator that you have to write for the function that you are trying to use in the flask, what happens?
+Flask will try to verify: if someone wants to access this "Hello" API, are they trying to access this particular thing on this particular path or not? (The path is "/").
+Only if someone accesses this particular path ("/"), then Flask will send the request to this particular "Hello" function.
+
+Execution:
+
+When you try to execute this function, you will notice, "If you provide in the url, if you provide something like EC2 instance colon 5000 slash, if you say something like Bhavana, you will not get the output as "Hello World,"  whereas if you only give the slash, then you will get the output as "Hello World.".
+
+Finally, in order to build and deploy this API, you need a server.
+
+->
+
+What Flask does is build an in-built server. Generally, Flask comes with an inbuilt development server where you can execute this program without deploying it on servers like Tomcat, Websphere, or any particular application server. So you have to simply give app.run, and on which particular URL does this app have to run?
+
+For example, if you give app.run('0.0.0.0'), then you need to run on the EC2 instance IP address only or your local machine IP address.
+
+For execution in code spaces, it is difficult as a tunnel needs to be created. So copy the program and try to execute it on an EC2 instance.
+
+Log into the EC2 instance through gitbash and create a new file called "helloworld.py." The command to create and open the file is "vim helloworld.py."
+
+Inside the vim helloworld.py file, copy the code that you have written.
+
+Below is the code:
+
+from flask import flask
+
+app = Flask(__name__)
+
+@app.route("/")
+
+def hello():
+return "Hello World!"
+
+app.run('0.0.0.0')
+
+Save the file. If flask is not installed on an EC2 instance, install flask on an EC2 instance using pip. First, make sure that Python is installed; if not, follow the below steps:
+
+sudo apt update - updates package list
+sudo apt install python3 python3-pip -> installs python3 and pip
+sudo pip3 install flask -> installs flask
+
+Execution:
+
+Execute the file as "python3 helloworld.py."
+As soon as you execute, you can observe that the flask has started a development server.
+
+ubuntu@ip-172-31-23-243:~$ vim helloworld.py
+ubuntu@ip-172-31-23-243:~$ python3 helloworld.py
+* Serving Flask app 'helloworld'
+* Debug mode: off
+Warning: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+* Running on all addresses (0.0.0.0)
+* Running on http://127.0.0.1:5000
+* Running on http://172.31.23.243:5000
+Press CTRL+C to quit.
+
+Then go to the browser and copy the EC2 instance public address that you are running the application on.
+
+Type as below in the browser:
+
+publicipaddressofec2:5000/ -> http://54.89.53.192:5000/
+
+By default, the flask application runs on port number 5000, but you can change it.
+
+Then you will get the output "Hello World!"
+
+If you give in browser as below:
+
+54.89.53.192:5000/abc -> You will get the output  "Not Found."  But who returned this output? , that is, otherwise you would get something like a web page crash, but you got a proper error message as: "The requested url was not found on the server. If you entered the URL manually, please check your spelling and try again." 
+
+The above response was sent by Flask, and this decorator is taking this particular action. The use of the decorator is when someone is trying to access this particular API. In terms of the flask, it is doing two things:
+
+One is saying flasks that only serve this particular function. Hello on this particular slash, or if someone is trying to access it on a different "URL," then send out this particular error message.
+
+
+Task2:
+
+Perform the creation of a ticket or issue by simply replacing the "return Hello World!" statement in the above simple code.
+Replace the function name with "createJIRA," and even in app.route, change it to "/createJIRA,"), indicating the decorator to run on that particular function only. That is, the application that you will write will not be accessed at any other URL except /createJIRA.
+Take the code from Part 1 and copy the code inside the function definition block.
+Provide a tab for proper indentation while copying the code as you are writing inside the function block.
+- Keep import statements at the beginning of the program.
+As an API, it should not use a print statement; instead, it should use a "return" statement. Just replace it with a return.
+For changing the port, you can mention the following:
+
+app.run('0.0.0.0', port=5000)
+
+As it is a "POST" method, you need to change the method to "POST."
+
+@app.route("/createJIRA", methods = ['POST'])
+
+Now copy the entire code that you have written into a new file called "github.py." The command to create and open the file is "vim github.py.".
+
+Save the file and execute it. Below is the output; you will get
+
+ubuntu@ip-172-31-23-243:~$ vim github.py
+ubuntu@ip-172-31-23-243:~$ python3 github.py
+* Serving the Flask app 'github'
+* Debug mode: off
+Warning: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+* Running on all addresses (0.0.0.0)
+* Running on http://127.0.0.1:5000
+* Running on http://172.31.23.243:5000
+
+In order to know the flow and ensure everything is working fine, validate it by creating a webhook.
+
+Steps for creating a webhook:
+
+In order to create a webhook, first need to understand the URL of the EC2 instance.
+
+Go to the instance  and either copy "public IPv4 address" or "public IPv4 DNS."
+
+Copy the IPv4 DNS, as it looks more genuine, and go to GitHub.
+
+In any particular repository, Go to the settings section (as webooks need to be created in a particular repository, that is, an issue needs to be created) -> Go to the webhooks section. Add webhook 
+
+- In WeBook, add the copied public IPv4 DNS as "http://ec2-54-89-53-192.compute-1.amazonaws.com:5000/createJira,"  not https. Even when you are accessing the url from your browser, it should be http only.
+
+Content type: application/json
+
+In events, select "Individual Events."  This is for github to understand on which actions I should trigger the webhook and send the request to the flask application or the API that you have written. Because on Github, there will be many actions.
+
+Select "Issue Comments" for this particular repository; you just need to select the relevant action.
+
+Finally, add the webhook. As soon as you add the webhook, GitHub performs test validation.
+
+Try to resolve the error; if it is not validating, that will be a red flag.
+
+Now, as soon as you comment "/jira" in github, a ticket will be created in the Jira dashboard.
+
+Assignment:
+
+Just use the "if" condition and verify if the comment is "/jira."  Only then will a ticket be created.
+
+Hint: Go back to the settings of the repository, then webhooks, and look at the json information github is sending. In that search, look for a comment called "/jira" that is available in the body. Traverse through this particular JSON information and understand the particular dictionary object. In the dictionary object, you need to get to the body section, and in the if condition, say "if body equals to equals to /jira,"  only then can you perform the API creation. 
+
+Note:
+
+The application will not run if the flask server is stopped.
+
+Interview :
+
+In the interview, you can mention the examples. Let's say there is an API, and if someone wants to access this API, what a devops engineer who has written the program can do is use a decorator in front of the function definition, saying only authenticated users can access the function. So, the authorization action runs before the function execution.
+
+
+
+
+Challenges faced:
+
+Connecting to an EC2 instance from gitbash
+I was not able to install Flask, but it was resolved by searching for commands.
+
+
+

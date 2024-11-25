@@ -1,0 +1,182 @@
+Task:
+
+Step 1: Go to AWS Lambda and search for Lambda in the AWS console.
+
+Step 2: Click on Create a Function. The user interface is very simple.
+
+Let's say you want to write code from scratch, or you want to start writing your program directly, or you want to use any samples that are provided by AWS.
+Basically, this will help developers as well as devops engineers.
+These samples will help developers create microservices, for example: ddb table 
+For devops engineers, triggering lambda functions when an object is created in a S3 object.
+There's an option to write code on your personal laptop instead of on the AWS console, and you can create an image out of the code that you have written. That is, you can create a Docker image out of the code that you have written and use that image. But you need to push the image to the ECR.
+The main focus for devops engineers will be creating code from scratch; they can write code using Vscode or something else and upload a zip file as well.
+
+Step 3: Select from scratch, give the function name as "x," for example, test, and select runtime in Python (need to choose based on the particular task).
+
+Lambda functions can only be written in supported languages, so here are some of the most commonly used supporting languages.
+
+Step 4: choose architecture type, scroll down, open advanced settings, and click the checkbox "enable function url.".
+
+When you check "enable function url," you will get a public IP address to access the application that you have written in the lambda functions.
+If you don't enable this, you cannot access it from outside, but you can still run the program inside the AWS environment.
+
+Step 5: Select the authentication type; if we select "IAM Users," only "IAM Users" can access it, or if we give "none," anyone can access it.
+
+Step 6: Click the create function, and an aws lambda function will be created.
+
+Step 7: After the function is created, you will have two functions: "Add Trigger" and "Add Destination.".
+
+Basically, they are like what is triggered by the function and what is the destination of the function.
+Both trigger and destination are not mandatory, but trigger is used most of the time.
+
+What is a trigger?
+
+Basically, these lambda functions, or serverless functions, are event-driven functions.
+This will be an event-driven function, triggered by a specific event.
+The event can be a cloud watch event; you can tell Cloud Watch to trigger it every day at a specific time; or it can be an API event on the cloud watch.
+You can tell Cloud Watch that whenever an EBS volume is created, it triggers the lambda function.
+It can be from S3 as well; even S3 has event triggering; that is, you can trigger from S3 or from other services that support event triggering.
+
+What should I do without a trigger?
+
+You have to manually run the lambda function, but it will kill the purpose of creating this serverless application as a devops engineer.
+You can create a lambda function and run it by yourself; you can run the function every day at a specific time or whenever required.
+But if you configure lambda functions with some events, then it will be a more efficient solution.
+
+
+Step 8: If you scroll down, there will be an example.
+
+An explanation of a common example:
+
+When you run that Python function, it will return "hello" from the lambda functions in the browser.
+You can change the function and modify it according to your tasks and wishes.
+You can write any Python function, but you have to make sure that the name of the function is "lambda_handler.".
+
+Note:
+You can change the function name, but if you are not changing the configuration, the name has to be "lambda_handler.".
+You can write multiple functions, for example, def bhavana (), but these functions will not be called automatically; that is, def needs to be triggered from the lambda handler.
+You have to basically mention the function inside the lambda handler and invoke the function.
+
+import json
+
+def lambda_handler(event, context):
+# TODO implement
+    bhavana()
+    return {
+'statusCode': 200,
+'body': json.dumps('Hello from Lambda!')
+}
+    
+    
+def bhavana:
+
+Basically, lambda_handler is like the main function that this serverless architecture calls.
+For example, if your cloudwatch is triggering the lambda function and 10 functions are present in the code, "AWS" has to know which function has to be called.
+So, the first function that gets called is the lambda function.
+You can change the name "lambda_handler" (function name) by going to configuration. You can edit the function name and provide the function name, and you can modify it accordingly.
+But if you are not changing the name, then the name has to be "lambda_handler.".
+If you have requirements, you can keep adding the functions by clicking the lambda function name in code (new file or new folder), and you even have a chance of uploading a zip file if you
+don't want to code directly in the AWS console.
+
+
+How do you control this lambda function?
+
+Basically, you want to pass some arguments to this, or if, in the future, you don't want to make modifications to the code, you can use the environment variables in a similar fashion when you code on your personal laptop.
+You can tweak the environment variables by going to the configurations tab, and there you will find an option for environment variables. Click on that, edit, and add environment variables. 
+whenever this function gets called or on the compute that EC2 is creating. Whenever this function gets called, you can tweak the values from the environment variables.
+In configuration, you can set rules for permissions on who wants to access this lambda function.
+By default, when you create a lambda function, a role gets created for you by AWS. If you don't want to use that role, you can use an existing role or another type when creating a lambda function.
+When creating a lambda function, you will have an option to change the default execution role; click on that and give the desired role as you wish (as an existing role gives a better idea, as we will know who needs access, and so on).
+When you are using a service in AWS and if that service has to access other services (for example, if Lambda wants to access SNS or S3), that role will be a critical role, and even for the default role, you can add more permissions.
+In destinations, you can add whatever destination it is for; e.g., if Lambda wants to send some information to any service or if you want to send some output to Lambda, then you can use Lambda destinations. 
+
+
+Output:
+
+If you copy the function url (available in the configuration tab) in any browser, you will get the output that is what you want as a desired outcome, which is defined in the function. That is, you can access the application.
+But if it is not enabled, you cannot access it from outside, but internal users can. For developers, it is more useful as they have to access applications when compared to devops engineers.
+
+
+Note:
+
+You can even configure your application within a particular vpc by adding "vpc" to the vpc section.
+- will be helpful if we want to restrict within a particular vpc, that is, all the services within that vpc can access lambda functions.
+
+
+ChatGpt:
+
+Task: Setting up AWS Lambda Function
+
+Step 1: Navigate to AWS Lambda in the AWS Console
+Access the AWS Management Console and search for "Lambda" in the services.
+
+Step 2: Create a New Lambda Function
+Click on "Create a Function" and choose the preferred setup method: from scratch, using a blueprint, or from existing sample code.
+
+Step 3: Configuration
+Select "From Scratch" option and specify a function name, e.g., "test", and choose the runtime environment, such as Python.
+
+Step 4: Advanced Settings
+Choose the architecture type and enable the "Enable Function URL" option to make the function accessible via a public URL.
+Configure authentication type based on requirements, either IAM Users or None for public access.
+
+Step 5: Function Creation
+Click on "Create Function" to initialize the Lambda function.
+
+Step 6: Adding Triggers and Destinations
+Explore options to add triggers (events that invoke the function) and destinations (where the function output is sent).
+
+Step 7: Understanding Triggers
+Triggers define the events that invoke the Lambda function.
+Examples include CloudWatch events, API Gateway requests, S3 object creations, etc.
+Manual invocation is possible but defeats the purpose of serverless architecture.
+
+Step 8: Function Example and Configuration
+Modify the provided example code or write custom code for the Lambda function.
+Ensure that the main function is named "lambda_handler" for AWS to invoke it correctly.
+
+Managing Function Execution
+Utilize environment variables for dynamic configuration and parameter passing.
+Define permissions and roles for accessing other AWS services or resources.
+Consider using VPC configuration for network isolation and security.
+
+Output and Testing
+Access the function URL to test the application output.
+Enable external access for developers as needed.
+
+Challenges and Considerations:
+Environment Setup: Ensuring proper configuration of AWS credentials and permissions.
+Function Logic: Writing efficient and error-resilient function code.
+Trigger Configuration: Configuring appropriate triggers and handling event-driven workflows.
+Security and Permissions: Managing IAM roles, permissions, and access controls.
+Debugging and Testing: Troubleshooting function behavior and ensuring correctness.
+Scaling and Performance: Designing for scalability and optimizing function performance.
+Integration and Dependencies: Integrating with other AWS services and handling dependencies.
+Monitoring and Logging: Setting up logging and monitoring for function execution and errors.
+Cost Optimization: Monitoring and optimizing costs associated with Lambda function execution and resource usage.
+
+
+Resume Point:
+
+Certainly, here's how you can include the project in your resume along with additional exploring tasks:
+
+Project: AWS Lambda Function Deployment
+Implemented AWS Lambda functions for event-driven serverless applications, creating microservices and automating tasks.
+Explored advanced configurations including trigger setup, IAM permissions, and environment variable management.
+
+Additional Exploring Tasks:
+
+Integration with Other AWS Services:
+Explore integrating Lambda functions with S3, API Gateway, and DynamoDB for building robust serverless architectures.
+
+Monitoring and Logging:
+Learn to set up CloudWatch alarms and log streams to monitor Lambda function performance and troubleshoot issues.
+
+Cost Optimization:
+Experiment with optimizing Lambda function configurations to minimize costs while maintaining performance and scalability.
+
+Security Best Practices:
+Dive into IAM roles and policies, encryption at rest, and other security measures to enhance the security posture of Lambda functions.
+
+
+

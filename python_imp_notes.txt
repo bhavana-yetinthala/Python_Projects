@@ -1,0 +1,24 @@
+How to get pull requests information on a repository using python ?
+
+- requests module, need to import this module
+- API (url) -> pull, search github API documentations, will get REST API documentations, search for what ever you need, for eg: pull request
+  
+  a) need to just copy the url and take note of it 
+  b) in the url, you will have organization name then repository name
+  c) should give api.github.com before url, for eg: "api.github.com/repos/kubernetes/kubernetes/pulls"
+  d) you can simply copy the above url in your personal laptop (in any browser), you will get the full information
+  e) but need to do using python, code is below as follows:
+     
+     import requests
+     response = requests.get("https://url")
+     print(response.json())
+
+  f) the above code python code prints the same output in the same way of giving url on any browser.
+  g) for http status code, just give as print(response.status_code()) - to know if the request is successful or not. If not success, you will get an error 404.
+  h) how to know, number of pull requests made by a person ?
+
+Check:
+ - how to delete a particular key ?
+
+- JSON -> Dictionary
+- print

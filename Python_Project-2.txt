@@ -1,0 +1,70 @@
+File Operations:
+
+As a devops engineer, you might use file operations frequently.
+
+Examples: 
+
+1) You are assigned a task to update the server configuration file when an alert is sent to you or a metrix is met. So, in such cases, you will use the Python file operations.
+2) If there is an application properties file and you are asked to update a field in the application properties automatically, even in such cases, Python file operations are required.
+
+
+Task:
+
+To update the server configuration file when the maximum number of connections is 200 to 500
+
+Final Output:
+
+It needs to be updated automatically; you need to write a Python file that has a function called update server config.
+
+There should be a function like this: when someone calls this update config function, the maximum connections field in the server config field is automatically changed.
+from 200 to 500.
+
+This is the task that is given; let's see how to do it:
+
+First, let's write the algorithm:
+
+Step 1: Read the file.
+Step 2: You need to store all of the files in a variable, so a variable needs to be created. That means a list needs to be created when the file is open. (A file will be read, and all of the 
+lines in the file will be stored in a variable or list. )
+Step 3: Next, the file needs to be opened in write mode.
+Step 4: Update only the maximum connections field in the file; you need to use the "if condition" if there is only an update to one field.
+
+
+Challenges:
+1) Not able to view the config file
+2) FileNotFound error
+3) Was not able to see the server configuration file when copied from github.
+
+
+ChatGpt:
+
+Task:
+
+The objective is to automate the process of updating the server configuration file when the maximum number of connections needs to be changed from 200 to 500. This requires the implementation of a Python function named "update_server_config".
+
+Algorithm:
+
+Read the server configuration file.
+Store the content of the file in a variable or list.
+Open the file in write mode to make modifications.
+Update the maximum connections field in the file.
+Use an "if condition" to ensure that only the specified field is updated.
+Challenges:
+
+Difficulty viewing the configuration file: Ensure proper file permissions and verify file path accuracy.
+FileNotFoundError: Check if the file exists in the specified location and verify the file path.
+Inability to see the server configuration file when copied from GitHub: Confirm that the file was copied correctly and that it's accessible in the intended directory.
+Technical Explanation:
+
+As a DevOps engineer, file operations are commonly utilized for tasks such as updating server configuration files or modifying application properties automatically. For instance, when alerted or upon meeting certain metrics, automated updates to configuration files become necessary.
+
+In this scenario, the task involves creating a Python script with a function named "update_server_config" that can automatically update the maximum number of connections in the server configuration file.
+
+The algorithm involves reading the contents of the configuration file, storing them, opening the file in write mode to make changes, and updating the maximum connections field specifically. Challenges may include difficulties in accessing or locating the configuration file, encountering FileNotFoundError due to incorrect file paths, and issues with viewing or accessing files copied from external sources such as GitHub.
+
+By addressing these challenges and implementing the proposed algorithm, DevOps engineers can streamline and automate the process of updating server configurations, enhancing efficiency and reliability in managing server infrastructure.
+
+
+Resume Point:
+
+Automated server configuration updates using Python file operations, improving system efficiency and reliability.

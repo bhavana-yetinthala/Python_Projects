@@ -1,0 +1,260 @@
+Most cloud and devops engineers use cost optimization on a day-to-day basis.
+
+Why do organizations move toward the cloud?
+
+Basically, there are mainly two reasons.
+First, the cloud is basically aimed at reducing the overhead of the infrastructure.
+Second, to optimize their cloud cost—that is, to optimize the infrastructure cost. (For startups or mid-scale companies, the process of setting up entire data centers, purchasing the servers, arranging those servers, and maintaining an entire team can be called the data center team or system administrator team, whatever it is building and implementing all these 
+require a lot of time and continuous monitoring of the data center (if the data center is not monitored, it will cause a lot of issues like latency, loss of data, servers going down, and so on).
+In a nutshell, the overhead for startups or mid-scale organizations is that they have to create this entire setup by themselves and manage it.
+It's not only about overhead; it will be a big amount for maintenance, including paying for engineers.
+That's why an easy-to-go solution will be the cloud.
+
+Why do devops engineers need to implement some activities regarding cost optimization?
+
+(As a devops engineer, you might say that it will be the best option to move towards the cloud instead of building and maintaining these data centers.) <but this is the wrong thing.
+After moving to the cloud, the cost will go down if you are doing it efficiently.
+
+Below is an example:
+
+Let's say there is a developer, and you have granted this developer proper IAM access. The IAM access means that this developer can create an EC2 instance.
+Now that this developer has good knowledge of cloud computing, he went ahead and created his own EC2 instance on the cloud platform. What he has done is attached an EC2 volume to the 
+EC2 instance, or by default, volume, will be created when EC2 instance is created.
+Without volume, data cannot be stored. Let's say you need to create some files and update some configurations.
+Basically, the volume will be filled with very sensitive information about the organization, or they want to take up the backup of the volume.
+In a similar fashion, developers have taken backups every day, which are snapshots. After a while, he said that this feature is deprecated and mentioned, "I don't want this EC2 instance; let me delete it; it is no longer useful." And this person went ahead and deleted volume as well, or, let's say, he created an external volume for the EC2 instance. He deleted the EC2. 
+instance, but forgot to delete the external volume. 
+The above two can be cases; automatically, he may forget to delete the snapshots that he has taken as he didn't delete the volumes. 
+But AWS keeps charging for these snapshots and all the volumes.
+
+But above is just one basic case; it can be S3 buckets, e.g., clusters. Cloud costs will go up if you are not managing the cost of the cloud platform efficiently, as there are nearly 200 AWS and 
+It will be difficult to monitor them manually.
+
+What devops engineer should make sure?
+
+The devops engineer should make sure that the cost of the cloud should go down, and he should ensure that, by looking at the area, there are no stale resources on the cloud platform. Then a devops engineer can typically do two things:
+
+One devops engineer can send out notifications saying, "Hey, I have noticed that you have created an EBS volume but it is not attached to any ECS instance, or you have created a bunch of snapshots but these snapshots are not attached to any volume or any ECS instance. Why don't you delete them?" or 
+If this devops engineer has access to or permissions to delete them (which they will generally have), they can go ahead and delete them.
+
+Who can delete the instances?
+
+Devops Engineers
+- Developers
+
+
+Task: Let's see how devops engineers can implement the cost optimization task using the delete option, that is, by deleting the stale resources.
+
+will be implemented using lambda functions; inside lambda functions, python code will be written (Botto 3); the python script will talk to the AWS API.
+Scripts will be written individually, e.g., for EBs, S3, etc.
+Even the lambda function can be triggered with the help of a cloud watch.
+
+Problem Statement:
+
+There are some EBS volume snapshots; this developer has an EC2 instance, let's say, and for this EC2 instance, the developer uses a volume.
+
+This can be an in-built volume or a volume that comes with the EC2 instance.
+And for this volume, the developer has created multiple snapshots because he felt that the information was important.
+Later, the developer deleted the volume and deleted the EC2 instance, or just deleted the EC2 instance, and these snapshots and volumes were not deleted.
+It can be any case; case 1 is just the EC2 instance being deleted, and case 2 is the EC2 instance and volume both being deleted.
+In any of these cases, snapshots are useless. Because the snapshot makes sense if it is available for a volume that is attached to an instance, but if not, the snapshots are available for a long time and nobody is using them. So it would be better to delete those snapshots.
+
+What do you do??
+
+Basically, you would write a lambda function, and this function is written in Python code.
+The written Python script will talk to the AWS API.
+
+
+The steps involved are:
+
+Step 1: Fetching all the EBS snapshots.
+Step 2: Filter out the snapshots that are stale. Once identified, we will delete the snapshots.
+
+
+Demonstration in AWS:
+
+1) First, create an ebs volume snapshot and go to the ec2 instance.
+2) Create an EC2 instance, and then create a snapshot from the volume of EC2.
+3) For the EC2 instance, give a name, select Ubuntu, and give a key pair. Generally, the default volume will be created (you can keep that or use a new one), then the remaining configurations will be kept default and the EC2 instance will launch. 
+
+Note: If you go to the ec2 dashboard, you can see the volume that will be created along with the ec2 instance, and after ec2 is launched, if you click the ec2 instance, you can see the volume.
+(in the storage tab).
+
+What the developer was doing was taking snapshots each and every day.
+It's like an image; after one year, if you want data stored in that particular volume, you can spin the volume of that image.
+
+4) In the dashboard section, go to snapshots and create a snapshot. You need to select the particular volume to which it needs to be attached. Then only that particular volume can be retrieved. 
+from that particular snapshot.
+5) Select resource type as "volume." Give a name to the snapshot and create the snapshot.
+
+Note: The developer wants to delete the instance, volume, and snapshots as well. But he forgot to delete the snapshots, as there are nearly 100 snapshots; even though he didn't remember regarding the volume, he only remembered to delete the instance. What happened is that all snapshots are still present, but volumes automatically got deleted due to the deletion of the EC2 instance, which is a good thing, but what about snapshots? In this case, we need to use lambda functions.
+
+6) Create a lambda function, give it a name, run it in Python, and leave default settings. After the lambda function is created, copy and paste the code from github (day-18 aws zero-hero), python code. Save it, then deploy it and test it (buttons will be present above the code itself).
+
+7) If we test it, a popup appears as a configure test event. Give it a name and save it.
+
+8) This is a manual operation, as we are only triggering the lambda function that is manually triggered. If you are invoking CloudWatch or something, you don't have to create the 
+test event.
+
+Testing:
+
+9) Now click on the "test" button. You will see that the test will fail due to permission issues, and typically lambda function testing takes only 3 seconds.
+
+fails because the role that is running this lambda function does not have permissions to describe the snapshots. You need to give permission.
+
+10) While testing, it's better to increase the execution time to 10s in the general configuration of configurations tab. But if somebody asks what the default execution time is, you need to say 3s. Try to keep execution time as low as possible, because AWS charges you even based on the execution time and number of calls.
+
+
+Permissions:
+
+11) To grant the permissions, you need to know which "role" is executing this lambda function.
+
+12) Go to permissions in the configurations tab and click on "role." Go to the new tab and give permissions for "describe snapshots" and "delete snapshots.".
+
+13) After going to the new tab (the IAM permissions page), click on the "Add Permissions Button," then click on "Attach Policies.".
+
+14) If we search "snapshot," we will not find anything, and it is also difficult to find. It's better to create policies ourselves; click on "create policy" in the drop-down menu of the "Add Permissions" button (you need to go back after searching for a snapshot).
+
+15) After going to the "create policy" page, select the service as "EC2" and filter the actions.
+
+16) You can just type "snapshot" in the search bar. Select "DescribeSnapshots" in the "list" option and "DeleteSnapshots" in the "write" option and give resources as "All," then click next.
+
+17) Then give the policy name, and a new policy will be created. Now you need to attach this new policy to the role.
+
+18) Again, go back to that particular "role" (which was assigned in the lambda function, configuration tab). Then attach the policy that you created.
+
+19) Now, test it again. But still, you will get the error due to the description of instances and volumes.
+
+20) Again, create an inline policy and give permissions for "DescribeInstances" and "DescribeVolumes." Then attach yourself to the role.
+
+Outputs:
+
+21) Now we will observe that the snapshot will still be present even though the script has been executed.
+
+22) Let's delete the EC2 instance that we created. If we delete the EC2 instance automatically, the volume attached to it also gets deleted.
+
+23) After deleting the instance, if we give one more time "test," the snapshot will be deleted, as its associated volume will not be found (as we deleted, so it's not found).
+
+24) Next, create one more instance and one more volume. Again, test it, and you will observe that the snapshot will be deleted because code can be written in such a way that "if the snapshot belongs to a volume that is not associated with any EC2 instance, then delete the snapshot."
+
+
+Notes:
+
+The above snapshot will be a stale resource, so it needs to be deleted.
+
+
+Interview:
+
+In the interview, we can mention that we will also verify the snapshot, and if the snapshot was used 30 days ago, we will delete it, or you can mention the asked conditions.
+
+Main aim:
+
+If the snapshot is stale or belongs to a volume that is not attached to any EC2 instance, then go ahead and delete it. It basically depends on the requirements of the organization.
+
+
+Tasks to explore:
+
+1) You can explore multiple scenarios after you understand the code. You can play with the code and improve your knowledge by trying different scenarios.
+2) You can create 100 snapshots, and by using the code, you can delete all the snapshots in one go.
+3) You will write lambda functions for S3 buckets, RDS instances, and so on.
+
+
+
+
+ChatGPT:
+
+Cost Optimization in Cloud Environments: A DevOps Perspective
+
+Organizations migrate to cloud environments primarily for two key reasons: reducing infrastructure overhead and optimizing costs. Traditionally, setting up and maintaining on-premises data centers involve significant investments in time, resources, and personnel. Cloud services provide a more agile and cost-effective solution, eliminating the need for in-house infrastructure management. However, cost optimization in the cloud requires proactive monitoring and management to avoid unnecessary expenditures.
+
+Why DevOps Engineers Focus on Cost Optimization:
+
+DevOps engineers play a crucial role in ensuring efficient utilization of cloud resources to minimize expenses. While migrating to the cloud offers scalability and flexibility, improper resource management can lead to inflated bills. DevOps engineers implement strategies to identify and eliminate redundant or underutilized resources, thereby optimizing costs. This includes monitoring for stale resources, such as unused EC2 instances, EBS volumes, S3 buckets, and snapshots, which continue to accrue charges if not managed effectively.
+
+Addressing Cost Optimization Challenges:
+
+One common challenge in cloud environments is the proliferation of stale resources, which result from incomplete resource cleanup after their intended use has ended. For instance, developers may create EBS volume snapshots for backup purposes but forget to delete them once they become obsolete. To address this issue, DevOps engineers leverage automation tools like AWS Lambda functions to identify and remove stale resources automatically.
+
+Implementation through Lambda Functions:
+
+The process involves writing Python scripts within Lambda functions to interact with the AWS API. These scripts are designed to perform specific tasks such as fetching EBS snapshots, filtering out stale snapshots, and deleting them accordingly. Lambda functions can be triggered manually or scheduled using AWS CloudWatch events for periodic execution.
+
+Demonstration Steps:
+
+Provision an EC2 instance and create associated resources, including EBS volumes and snapshots.
+Create a Lambda function with appropriate permissions to describe and delete snapshots.
+Test the Lambda function to ensure proper functionality, addressing any permission-related issues.
+Configure CloudWatch events for automated execution of the Lambda function at scheduled intervals.
+Monitor cost savings and resource optimization achieved through automated snapshot cleanup.
+Interview Insights:
+
+During interviews, DevOps engineers can showcase their understanding of cost optimization principles in cloud environments. They can demonstrate their proficiency in writing Lambda functions, configuring IAM permissions, and integrating automation workflows for efficient resource management. Additionally, discussing strategies for identifying and addressing different types of stale resources showcases a proactive approach to cost optimization.
+
+Further Exploration:
+
+Experiment with different scenarios to enhance understanding and proficiency in cost optimization techniques.
+Extend Lambda functions to handle other resource types such as S3 buckets, RDS instances, and EBS volumes for comprehensive cost management.
+Continuously refine and optimize automation workflows to adapt to evolving cloud environments and organizational requirements.
+By aligning technical expertise with strategic cost optimization goals, DevOps engineers play a pivotal role in maximizing the value of cloud investments for organizations of all sizes.
+
+ChatGPT:
+
+To effectively include your experience working on the task of cost optimization in cloud environments on your resume, you can follow these steps:
+
+Craft a Strong Title or Heading:
+Begin by creating a clear and concise title or heading that highlights your expertise in cloud cost optimization. For example:
+
+Cloud Cost Optimization Specialist
+DevOps Engineer with Cloud Cost Management Experience
+Highlight Relevant Skills:
+Under a dedicated "Skills" section or within your professional summary, emphasize key skills related to cloud cost optimization. These may include:
+
+Cloud computing platforms (e.g., AWS, Azure, Google Cloud)
+Automation tools (e.g., AWS Lambda, CloudFormation)
+Scripting languages (e.g., Python, Bash)
+Infrastructure as Code (IaC) methodologies (e.g., Terraform)
+Resource monitoring and management
+Problem-solving and analytical skills
+Describe the Task in Your Experience Section:
+In your experience section, include a bullet point or brief paragraph that outlines your involvement in the cost optimization task. Focus on specific actions taken, technologies used, and outcomes achieved. For example:
+
+"Led initiatives to optimize cloud infrastructure costs by developing and implementing automated solutions using AWS Lambda functions. Collaborated with cross-functional teams to identify and remove stale resources, resulting in a X% reduction in monthly cloud expenses."
+Quantify Achievements:
+Whenever possible, quantify the impact of your work on cost optimization. Use metrics or percentages to demonstrate the effectiveness of your efforts. For instance:
+
+"Reduced AWS monthly billing by $X through the implementation of automated snapshot cleanup procedures."
+"Identified and eliminated over X% of stale resources, resulting in significant cost savings for the organization."
+Tailor Your Resume to the Job Description:
+Customize your resume for each job application by highlighting relevant experiences and skills that match the requirements of the role. Use keywords and phrases from the job description to demonstrate your alignment with the employer's needs.
+
+Include Relevant Certifications or Training:
+If you have obtained certifications or completed training programs related to cloud computing or DevOps practices, mention them in a dedicated section or alongside relevant experiences. Certifications such as AWS Certified Solutions Architect or AWS Certified DevOps Engineer can add credibility to your expertise.
+
+Provide Examples or Portfolio Links (Optional):
+If you have created any projects, code samples, or documentation related to cloud cost optimization, consider including links to relevant GitHub repositories, personal websites, or online portfolios. This allows employers to review your work in more detail.
+
+Remember to keep your resume concise, relevant, and focused on showcasing your skills and accomplishments related to cloud cost optimization. Tailoring your resume to highlight this particular task will help you stand out to employers seeking candidates with expertise in cloud infrastructure management and cost optimization strategies.
+
+
+User
+Please give in short on this task.
+ChatGPT
+Certainly! Here's a concise version for your resume:
+
+Experience:
+
+Led initiatives in cloud cost optimization using AWS Lambda functions.
+Developed and implemented automated solutions to identify and remove stale resources.
+Achieved significant cost savings by reducing monthly cloud expenses by X%.
+Skills:
+
+Cloud cost optimization
+AWS Lambda functions
+Automation
+Resource management
+Cost reduction strategies
+
+
+
+
+

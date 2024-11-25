@@ -1,0 +1,7 @@
+Boto-3 Projects:
+
+Boto-3 is a python package that is used to interact with AWS.
+
+Task:
+
+To create an ec2 instance or s3 bucket on AWS programmatically using python, then the module that you will use to interact with AWS API's is Boto3 module.
